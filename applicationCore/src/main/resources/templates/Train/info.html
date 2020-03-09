@@ -14,7 +14,7 @@
         <td>Type</td>
         <td>Number of Seats</td>
         <td>Firm</td>
-        <td th:if="${train instanceof T(pl.lodz.p.edu.model.Trains.ExpressTrain)}">Carriage</td>
+        <td th:if="${train instanceof T(pl.lodz.p.edu.pl.lodz.p.edu.model.Trains.ExpressTrain)}">Carriage</td>
         <form  th:action="@{/trains}" method="get">
             <td><input type="submit" value="Back" /></td>
         </form>
@@ -27,7 +27,7 @@
         <td th:text="${train.getClass().getSimpleName()}" />
         <td th:text="${train.seats}" />
         <td th:text="${train.firm.name}" />
-        <td th:if="${train instanceof T(pl.lodz.p.edu.model.Trains.ExpressTrain)}" th:text="${train.carriage}"/>
+        <td th:if="${train instanceof T(pl.lodz.p.edu.pl.lodz.p.edu.model.Trains.ExpressTrain)}" th:text="${train.carriage}"/>
     </tr>
     </tbody>
 </table>

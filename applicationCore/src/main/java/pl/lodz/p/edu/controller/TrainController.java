@@ -83,31 +83,31 @@ public class TrainController {
 
 
 //    @GetMapping
-//    public List<Train> getAllTrains(Model model){
+//    public List<Train> getAllTrains(Model pl.lodz.p.edu.model){
 //        return trainService.getTrains();
 //    }
     @GetMapping
     public String s(Model model){
 
-       // model.addAttribute("trains",trainService.getTrains());
+       // pl.lodz.p.edu.model.addAttribute("trains",trainService.getTrains());
         model.addAttribute("trains", getTrains());
         model.addAttribute("text",new TrainType(""));
         return "Train/index";
     }
 
 //    @GetMapping("/add")
-//    public String addSite(Model model){
+//    public String addSite(Model pl.lodz.p.edu.model){
 //
-//        model.addAttribute("firms",firmService.getFirms());
-//        model.addAttribute("train",new ExpressTrain());
+//        pl.lodz.p.edu.model.addAttribute("firms",firmService.getFirms());
+//        pl.lodz.p.edu.model.addAttribute("train",new ExpressTrain());
 //        return "Train/create";
 //
 //    }
 //
 //    @PostMapping("/add")
-//    public String addTrain(@Valid @ModelAttribute("train") Train train, BindingResult bindingResult, Model model){
+//    public String addTrain(@Valid @ModelAttribute("train") Train train, BindingResult bindingResult, Model pl.lodz.p.edu.model){
 //        if(bindingResult.hasErrors()){
-//            model.addAttribute("firms",firmService.getFirms());
+//            pl.lodz.p.edu.model.addAttribute("firms",firmService.getFirms());
 //            return "Train/create";
 //        }
 //        trainService.addTrain(train);
@@ -174,7 +174,7 @@ public class TrainController {
             model.addAttribute("trainType",new TrainType("passenger"));
         }
         model.addAttribute("train",getTrain(id));
-        //model.addAttribute("train",trainService.getTrain(id));
+        //pl.lodz.p.edu.model.addAttribute("train",trainService.getTrain(id));
         model.addAttribute("firms",firmService.getFirms());
         return "Train/edit";
     }
@@ -211,7 +211,7 @@ public class TrainController {
     @GetMapping("/train/{id}")
     public String info(@PathVariable UUID id, Model model){
         model.addAttribute("train",getTrain(id));
-       // model.addAttribute("train",trainService.getTrain(id));
+       // pl.lodz.p.edu.model.addAttribute("train",trainService.getTrain(id));
         model.addAttribute("ticket", ticketService.getTicket(getTrain(id).getTicketID()));
         return "Train/info";
     }
@@ -236,7 +236,7 @@ public class TrainController {
         }
         else{
             model.addAttribute("trains",sort(text.getType()));
-           // model.addAttribute("trains",trainService.sort(text.getType()));
+           // pl.lodz.p.edu.model.addAttribute("trains",trainService.sort(text.getType()));
         }
         model.addAttribute("text",text);
         return "Train/index";
