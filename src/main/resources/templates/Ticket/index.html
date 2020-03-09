@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Indeks</title>
+</head>
+<table>
+    <thead>
+    <tr>
+        <td>Id</td>
+        <td>User</td>
+        <td>Train</td>
+        <td>Start</td>
+        <td>End</td>
+        <form  th:action="@{/tickets/add}" method="get">
+            <td><input type="submit" value="Create ticket" /></td>
+        </form>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${tickets.isEmpty()}">
+        <td colspan="2"> No tickets </td>
+    </tr>
+    <tr th:each="ticket: ${tickets}">
+        <td th:text="${ticket.ticketId}" />
+        <td th:text="${ticket.user.name}"/>
+        <td><span th:if="${ticket.train}" th:text="${ticket.train.name}"/></td>
+        <td th:text="${ticket.startingDate}" />
+        <td>
+            <span th:if="${ticket.endingDate == null}">
+                <form  th:action="@{/tickets/end/{id}(id=${ticket.ticketId})}" method="get">
+                    <input type="submit" value="End" />
+                </form>
+            </span>
+            <span th:if="${ticket.endingDate}" th:text="${ticket.endingDate}"/>
+        </td>
+<!--        <td th:text="${ticket.endingDate}" />-->
+        <form  th:action="@{/tickets/delete/{id}(id=${ticket.ticketId})}" method="get">
+            <td><input type="submit" value="Delete" /></td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+<form  th:action="@{/tickets/sortUser}" method="get">
+    <input type="text" th:field="${textUser.type}">
+    <input type="submit" value="Sort Users" />
+</form>
+<form  th:action="@{/tickets/sortTrain}" method="get">
+    <input type="text" th:field="${textTrain.type}">
+    <input type="submit" value="Sort Trains" />
+</form>
+</body>
+</html>

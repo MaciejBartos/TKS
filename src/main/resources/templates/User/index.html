@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Indeks</title>
+</head>
+<table>
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Active</td>
+            <form  th:action="@{/users/add}" method="get">
+                <td><input type="submit" value="Create User" /></td>
+            </form>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${users.isEmpty()}">
+        <td colspan="2"> No users </td>
+    </tr>
+    <tr th:each="user: ${users}">
+
+        <td ><a th:href="@{users/user/{id}(id=${user.userId})}" ><span th:text="${user.userId}" /></a></td>
+            <td th:text="${user.name}" />
+            <td th:text="${user.type}" />
+            <td th:text="${user.isActive}" />
+        <form  th:action="@{/users/state/{id}(id=${user.userId})}" method="get">
+            <td><input type="submit" value="Change State" /></td>
+        </form>
+        <form  th:action="@{/users/edit/{id}(id=${user.userId})}" method="get">
+            <td><input type="submit" value="Edit" /></td>
+        </form>
+    </tr>
+
+
+    </tbody>
+</table>
+<form  th:action="@{/users/sort}" method="get">
+    <input type="text" th:field="${text.type}">
+    <input type="submit" value="Sort" />
+</form>
+</body>
+</html>

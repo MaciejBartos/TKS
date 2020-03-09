@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Indeks</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Type</td>
+        <form  th:action="@{/trains/add/express}" method="get">
+            <td><input type="submit" value="Create ExpressTrain" /></td>
+        </form>
+        <form  th:action="@{/trains/add/passenger}" method="get">
+            <td><input type="submit" value="Create PassengerTrain" /></td>
+        </form>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${trains.isEmpty()}">
+        <td colspan="2"> No trains </td>
+    </tr>
+    <tr th:each="train: ${trains}">
+        <td ><a th:href="@{trains/train/{id}(id=${train.trainId})}" ><span th:text="${train.trainId}" /></a></td>
+        <td th:text="${train.name}" />
+        <td th:text="${train.getClass().getSimpleName()}" />
+        <form  th:action="@{/trains/edit/{id}(id=${train.trainId})}" method="get">
+            <td><input type="submit" value="Edit" /></td>
+        </form>
+        <form  th:action="@{/trains/delete/{id}(id=${train.trainId})}" method="get">
+            <td><input type="submit" value="Delete" /></td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+<form  th:action="@{/trains/sort}" method="get">
+    <input type="text" th:field="${text.type}">
+    <input type="submit" value="Sort" />
+</form>
+</body>
+</html>
