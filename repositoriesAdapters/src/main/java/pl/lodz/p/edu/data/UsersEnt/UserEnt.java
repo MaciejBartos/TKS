@@ -1,7 +1,7 @@
 package pl.lodz.p.edu.data.UsersEnt;
 
 import pl.lodz.p.edu.data.TicketsEnt.TicketEnt;
-import pl.lodz.p.edu.data.UsersEnt.validationEnt.UniqueEmailEnt;
+
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -13,11 +13,9 @@ import java.util.UUID;
 public class UserEnt {
 
 
-
+    //brak sprawdzanai unikalnosci maila
     @NotBlank(message = "Email cannot be empty")
-    //@Pattern(regexp = "^[a-zA-Z0-9.]+@([azA-Z0-9]+[.])*[a-zA-Z]{2,4}$", message = "Invalid email")
     @Pattern(regexp = "^[a-zA-Z0-9.]+@([a-zA-Z0-9]+[.])+[a-zA-Z]{2,4}$", message = "Invalid email")
-    @UniqueEmailEnt(message = "Email is used")
     private String email;
 
     public String getEmail() {

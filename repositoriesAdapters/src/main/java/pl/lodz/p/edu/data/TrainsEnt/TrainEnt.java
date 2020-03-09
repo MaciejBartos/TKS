@@ -1,6 +1,6 @@
 package pl.lodz.p.edu.data.TrainsEnt;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.hibernate.validator.constraints.Range;
 import pl.lodz.p.edu.data.FirmsEnt.FirmEnt;
 
@@ -30,14 +30,14 @@ public class TrainEnt {
     //private TicketEnt ticket;
     private UUID ticketID;
 
-    public TrainEnt(@JsonProperty("name") String name, @JsonProperty("seats") int seats, @JsonProperty("firm") FirmEnt firm) {
+    public TrainEnt(String name, int seats, FirmEnt firm) {
         this.trainId = UUID.randomUUID();
         this.name = name;
         this.seats = seats;
         this.firm = firm;
     }
 
-    public TrainEnt(){
+    public TrainEnt() {
         this.trainId = UUID.randomUUID();
 //        seats = new ArrayList<>();
     }
@@ -72,12 +72,12 @@ public class TrainEnt {
 //    this.firm.setName(name);
 //}
 
-    public int getSeats(){
+    public int getSeats() {
 //        return seats.size();
         return seats;
     }
 
-    public void setSeats(int s){
+    public void setSeats(int s) {
 //        List<Seat> seats1 = new ArrayList<>();
 //        for (int i = 0; i < s; i++) {
 //            seats1.add(new Seat(Integer.toString(i+1)));

@@ -1,6 +1,6 @@
 package pl.lodz.p.edu.data.FirmsEnt;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -12,7 +12,7 @@ public class FirmEnt {
     @Pattern(regexp = "(TLKEnt)|(RegioEnt)|(InterCityEnt)", message = "Invalid Name")
     private String name;
 
-    public FirmEnt(@JsonProperty("name") String name) {
+    public FirmEnt( String name) {
         this.firmId = UUID.randomUUID();
         this.name = name;
     }
