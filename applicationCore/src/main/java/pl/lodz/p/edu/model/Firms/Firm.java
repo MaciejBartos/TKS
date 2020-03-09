@@ -2,14 +2,11 @@ package pl.lodz.p.edu.model.Firms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+
 import java.util.UUID;
 
 public class Firm {
     private UUID firmId;
-    @NotBlank(message = "Firm cannot be empty")
-    @Pattern(regexp = "(TLK)|(Regio)|(InterCity)", message = "Invalid Name")
     private String name;
 
     public Firm(@JsonProperty("name") String name) {

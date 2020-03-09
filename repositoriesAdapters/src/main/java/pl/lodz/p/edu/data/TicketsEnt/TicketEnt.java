@@ -1,13 +1,10 @@
 package pl.lodz.p.edu.data.TicketsEnt;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 import pl.lodz.p.edu.data.TrainsEnt.TrainEnt;
 import pl.lodz.p.edu.data.UsersEnt.UserEnt;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.constraints.Future;
+
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -20,7 +17,6 @@ public class TicketEnt {
     private TrainEnt train;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    //@Future(message = "Date must be in the future")
     @NotNull(message = "Date cant be empty")
     private LocalDate startingDate;
 
@@ -81,17 +77,5 @@ public class TicketEnt {
     }
 
 
-    @Component
-    public class LocalDateFutureValidator implements ConstraintValidator<Future, LocalDate> {
 
-        @Override
-        public void initialize(Future future) {
-        }
-
-        @Override
-        public boolean isValid(LocalDate localDate, ConstraintValidatorContext constraintValidatorContext) {
-            LocalDate today = LocalDate.now();
-            return localDate.isEqual(today) || localDate.isAfter(today);
-        }
-    }
 }

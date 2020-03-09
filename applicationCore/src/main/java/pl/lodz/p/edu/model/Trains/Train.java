@@ -1,23 +1,18 @@
 package pl.lodz.p.edu.model.Trains;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.Range;
 import pl.lodz.p.edu.model.Firms.Firm;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
 import java.util.*;
 
 public class Train {
 
 
     private UUID trainId;
-    @NotBlank(message = "Name cannot be empty")
-    @Size(min = 2, max = 20, message = "Name must have between 2-20 letters")
+
     private String name;
-//    @Size(min = 1,message = "Minimum 1 seat")
-//    public List<Seat> seats;
-    @Range(min = 1, message = "Invalid Seats number, must be greater than 0")
+
     private int seats;
     private Firm firm;
 
@@ -88,17 +83,7 @@ public class Train {
         this.seats = s;
     }
 
-//    public List<Seat> getSeats() {
-//        return new ArrayList<>(seats);
-//    }
 
-//    public Seat getSeatById(UUID trainId) {
-//        return seats.
-//    }
-//
-//    public void setSeats(List<Boolean> seats) {
-//        this.seats = seats;
-//    }
 
 
 }

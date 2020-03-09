@@ -1,6 +1,5 @@
 package pl.lodz.p.edu.model.Tickets;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.edu.model.Trains.Train;
 import pl.lodz.p.edu.model.Users.User;
@@ -8,7 +7,6 @@ import pl.lodz.p.edu.model.Users.User;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -21,9 +19,7 @@ public class Ticket {
     private User user;
     private Train train;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    //@Future(message = "Date must be in the future")
-    @NotNull(message = "Date cant be empty")
+
     private LocalDate startingDate;
 
     private LocalDate endingDate;
@@ -83,17 +79,5 @@ public class Ticket {
     }
 
 
-    @Component
-    public class LocalDateFutureValidator implements ConstraintValidator<Future, LocalDate> {
 
-        @Override
-        public void initialize(Future future) {
-        }
-
-        @Override
-        public boolean isValid(LocalDate localDate, ConstraintValidatorContext constraintValidatorContext) {
-            LocalDate today = LocalDate.now();
-            return localDate.isEqual(today) || localDate.isAfter(today);
-        }
-    }
 }

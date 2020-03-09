@@ -1,11 +1,6 @@
 package pl.lodz.p.edu.model.Users;
 
 import pl.lodz.p.edu.model.Tickets.Ticket;
-import pl.lodz.p.edu.model.Users.validation.UniqueEmail;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,10 +9,6 @@ public class User {
 
 
 
-    @NotBlank(message = "Email cannot be empty")
-    //@Pattern(regexp = "^[a-zA-Z0-9.]+@([azA-Z0-9]+[.])*[a-zA-Z]{2,4}$", message = "Invalid email")
-    @Pattern(regexp = "^[a-zA-Z0-9.]+@([a-zA-Z0-9]+[.])+[a-zA-Z]{2,4}$", message = "Invalid email")
-    @UniqueEmail(message = "Email is used")
     private String email;
 
     public String getEmail() {
@@ -36,12 +27,9 @@ public class User {
         this.password = password;
     }
 
-    @NotBlank(message = "Password cannot be blank")
     private String password;
 
-    @NotBlank(message = "Name cannot be empty")
-    @Pattern(regexp = "[A-z]*", message = "Invalid Name")
-    @Size(min = 2, max = 20, message = "Name must have between 2-20 letters")
+
     private String name;
 
     private String type;
