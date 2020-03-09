@@ -4,8 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.edu.model.Trains.Train;
 import pl.lodz.p.edu.model.Users.User;
-import pl.pas.pas.model.Trains.*;
-import pl.pas.pas.model.Users.*;
+
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
