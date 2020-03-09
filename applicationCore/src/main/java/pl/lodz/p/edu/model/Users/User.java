@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.model.Users;
 
 import pl.lodz.p.edu.model.Tickets.Ticket;
+import pl.lodz.p.edu.model.Users.validation.UniqueEmail;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -10,6 +11,33 @@ import java.util.List;
 import java.util.UUID;
 
 public class User {
+
+
+
+    @NotBlank(message = "Email cannot be empty")
+    //@Pattern(regexp = "^[a-zA-Z0-9.]+@([azA-Z0-9]+[.])*[a-zA-Z]{2,4}$", message = "Invalid email")
+    @Pattern(regexp = "^[a-zA-Z0-9.]+@([a-zA-Z0-9]+[.])+[a-zA-Z]{2,4}$", message = "Invalid email")
+    @UniqueEmail(message = "Email is used")
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @NotBlank(message = "Password cannot be blank")
+    private String password;
 
     @NotBlank(message = "Name cannot be empty")
     @Pattern(regexp = "[A-z]*", message = "Invalid Name")
@@ -31,11 +59,13 @@ public class User {
 
     private List<Ticket> tickets = new ArrayList<>();
 
-    public User(String name, String type, UUID idu, boolean isActive) {
+    public User(String name, String type, UUID idu, boolean isActive, String email, String password) {
         this.name = name;
         this.type = type;
         this.userId = idu;
         this.isActive = isActive;
+        this.email = email;
+        this.password = password;
     }
 
     public User(){

@@ -6,37 +6,7 @@
 </head>
 <body>
 <header th:replace="Base/navbar :: nav"></header>
-<table>
-    <thead>
-    <tr>
-        <td>Email</td>
-<!--        <td>Password</td>-->
-        <td>Id</td>
-        <td>Name</td>
-        <td>Type</td>
-        <td>Active</td>
-        <form  th:action="@{/users}" method="get">
-            <td><input type="submit" value="Back" /></td>
-        </form>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-
-        <td th:text="${user.email}" />
-<!--        <td th:text="${user.password}" />-->
-        <td th:text="${user.userId}" />
-        <td th:text="${user.name}" />
-        <td th:text="${user.type}" />
-        <td th:text="${user.isActive}" />
-    </tr>
-
-
-    </tbody>
-</table>
-
-
-
+<h1 th:if="${user.tickets.isEmpty()}">You have no tickets</h1>
 <div th:if="${!user.tickets.isEmpty()}">
     <h1>Tickets:</h1>
     <table>
@@ -61,5 +31,6 @@
         </tbody>
     </table>
 </div>
+
 </body>
 </html>

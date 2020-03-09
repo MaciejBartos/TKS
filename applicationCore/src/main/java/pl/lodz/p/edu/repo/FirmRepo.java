@@ -1,10 +1,10 @@
 package pl.lodz.p.edu.repo;
 
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.edu.model.Firms.Firm;
 import pl.lodz.p.edu.model.Firms.InterCity;
 import pl.lodz.p.edu.model.Firms.Regio;
 import pl.lodz.p.edu.model.Firms.TLK;
+import pl.lodz.p.edu.model.Firms.Firm;
 
 
 import java.util.ArrayList;

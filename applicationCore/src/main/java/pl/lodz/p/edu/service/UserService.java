@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.edu.model.Users.Admin;
 import pl.lodz.p.edu.model.Users.Client;
@@ -17,22 +18,24 @@ import java.util.UUID;
 public class UserService {
 
     private IRepo userRepo;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(IRepo userRepo) {
+    public UserService(IRepo userRepo, PasswordEncoder passwordEncoder) {
+        this.passwordEncoder =passwordEncoder;
         this.userRepo = userRepo;
     }
 
     public void addUser(User u){
         switch(u.getType()){
             case "Admin":
-                userRepo.add(new Admin(u.getName(),u.getUserId(),u.getIsActive()));
+                userRepo.add(new Admin(u.getName(),u.getUserId(),u.getIsActive(),u.getEmail(),passwordEncoder.encode(u.getPassword())));
                 break;
             case "ResourcesManager":
-                userRepo.add(new ResourcesManager(u.getName(),u.getUserId(),u.getIsActive()));
+                userRepo.add(new ResourcesManager(u.getName(),u.getUserId(),u.getIsActive(),u.getEmail(),passwordEncoder.encode(u.getPassword())));
                 break;
             case "Client":
-                userRepo.add(new Client(u.getName(),u.getUserId(),u.getIsActive()));
+                userRepo.add(new Client(u.getName(),u.getUserId(),u.getIsActive(),u.getEmail(),passwordEncoder.encode(u.getPassword())));
                 break;
         }
     }
@@ -52,6 +55,16 @@ public class UserService {
 
     }
 
+    public User getUser(String email){
+        Optional<User> u = ((UserRepo)userRepo).getByEmail(email);
+        if(u.isPresent()){
+            return  u.get();
+        }
+        else {
+            return new User();
+        }
+    }
+
     public void changeState(UUID id){
         Optional<User> u = userRepo.getById(id);
         if(u.isPresent()){
@@ -61,6 +74,7 @@ public class UserService {
 
 
     public void updateUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.update(user);
 //        Optional<User> u = userRepo.getById(user.getUserId());
 //        if (u.isPresent()){

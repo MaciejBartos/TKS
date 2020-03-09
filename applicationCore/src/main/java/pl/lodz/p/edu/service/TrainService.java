@@ -37,7 +37,8 @@ public class TrainService {
         if (t.isPresent()){
             return t.get();
         }
-        return new Train();
+        return null;
+        //return new Train();
     }
 
     public void updateTrain( Train tupdate){
@@ -52,26 +53,17 @@ public class TrainService {
                 tupdate.setFirm(new Regio());
                 break;
         }
-        Train t = getTrain(tupdate.getTrainId());
         trainRepo.update(tupdate);
 
-//        Optional<Train> t = trainRepo.getById(id);
-//        if (t.isPresent()){
-//            if(tupdate.getName() !="")
-//                t.get().setName(tupdate.getName());
-//            if(tupdate.getSeats() != null && tupdate.getSeats().size() != 0){
-//                t.get().setSeats(tupdate.getSeats());
-//            }
-//            if(tupdate.getFirm() != null)
-//                t.get().setFirm(tupdate.getFirm());
-//            trainRepo.update(id,t.get());
-//        }
     }
     public void delete(UUID id){
         //ustawienie nulla dla alokacji
         Optional<Train> t = trainRepo.getById(id);
         if(t.isPresent()){
-            t.get().getTicket().setTrain(null);
+//            if(t.get().getTicketID() !=null) {
+//                t.get().getTicket().setTrain(null);
+//
+//            }
             trainRepo.delete(t.get());
         }
 

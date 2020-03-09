@@ -1,9 +1,6 @@
 package pl.lodz.p.edu.repo;
 
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.edu.model.Users.Admin;
-import pl.lodz.p.edu.model.Users.Client;
-import pl.lodz.p.edu.model.Users.ResourcesManager;
 import pl.lodz.p.edu.model.Users.User;
 
 import java.util.ArrayList;
@@ -14,13 +11,21 @@ import java.util.UUID;
 @Repository
 public class UserRepo implements IRepo<User> {
 
-    public UserRepo() {
-        users.add(new Admin("Franek", UUID.randomUUID(), true));
-        users.add(new Client("Kamil", UUID.randomUUID(), true));
-        users.add(new ResourcesManager("Maciek", UUID.randomUUID(), true));
-    }
+//    @Autowired
+//    public UserRepo(PasswordEncoder passwordEncoder) {
+//        this.passwordEncoder = passwordEncoder;
+//
+//    }
+
+//    @PostConstruct
+//    private void postConstruct(){
+//        users.add(new Admin("Franek", UUID.randomUUID(), true,"admin", passwordEncoder.encode("admin")));
+//        users.add(new Client("Kamil", UUID.randomUUID(), true,"client", passwordEncoder.encode("client")));
+//        users.add(new ResourcesManager("Maciek", UUID.randomUUID(), true,"manager",passwordEncoder.encode("manager")));
+//    }
 
     private List<User> users = new ArrayList<>();
+//    private PasswordEncoder passwordEncoder;
 
     public void add(User u) {
         synchronized (this) {
@@ -30,6 +35,10 @@ public class UserRepo implements IRepo<User> {
 
     public Optional<User> getById(UUID id) {
         return users.stream().filter(user -> user.getUserId().equals(id)).findFirst();
+    }
+
+    public Optional<User> getByEmail(String email) {
+        return users.stream().filter(user -> user.getEmail().equals(email)).findFirst();
     }
 
     public List<User> getAll() {
@@ -48,6 +57,8 @@ public class UserRepo implements IRepo<User> {
 //            users.set(users.indexOf(user), u);
             synchronized (this) {
                 user.get().setName(u.getName());
+                user.get().setEmail(u.getEmail());
+                user.get().setPassword(u.getPassword());
             }
         }
     }

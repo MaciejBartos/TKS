@@ -28,11 +28,15 @@ public class TicketService {
         this.trainService = trainService;
     }
 
-    public void addTicket(Ticket t){
+    public void addTicket(Ticket t) throws Exception{
+        if(trainService.getTrain(t.getTrain().getTrainId())==null || trainService.getTrain(t.getTrain().getTrainId()).getTicketID() != null){
+            throw new Exception("train error");
+        }
         t.setUser(userService.getUser(t.getUser().getUserId()));
         t.setTrain(trainService.getTrain(t.getTrain().getTrainId()));
         t.getUser().getTickets().add(t);
-        t.getTrain().setTicket(t);
+        //t.getTrain().setTicket(t);
+        t.getTrain().setTicketID(t.getTicketId());
         ticketRepo.add(t);
     }
 
@@ -40,7 +44,7 @@ public class TicketService {
        Ticket t = getTicket(id);
         if(t.getEndingDate() == null){
             ticketRepo.delete(t);
-            t.getTrain().setTicket(null);
+            t.getTrain().setTicketID(null);
             t.getUser().getTickets().remove(t);
         }
     }
@@ -63,7 +67,7 @@ public class TicketService {
 //            if(flag){
 //                t.add(train);
 //            }
-            if(train.getTicket() == null){
+            if(train.getTicketID() == null){
                 t.add(train);
             }
 
@@ -96,7 +100,7 @@ public class TicketService {
         if(!t.getStartingDate().isAfter(LocalDate.now())){
             t.setEndingDate( LocalDate.now());
             if(t.getTrain() != null)
-            t.getTrain().setTicket(null);
+            t.getTrain().setTicketID(null);
         }
     }
 
@@ -106,5 +110,9 @@ public class TicketService {
 
     public List<Ticket>sortTrains(String text){
         return ((TicketRepo)ticketRepo).sortTrain(text);
+    }
+
+    public User getUserByEmail(String email){
+        return userService.getUser(email);
     }
 }

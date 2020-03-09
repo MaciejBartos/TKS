@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import pl.lodz.p.edu.model.Trains.Train;
 import pl.lodz.p.edu.model.Users.User;
 
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.constraints.Future;

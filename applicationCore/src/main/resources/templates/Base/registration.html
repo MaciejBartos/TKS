@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en" >
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="Base/head :: head">
     <meta charset="UTF-8">
-    <title>Indeks</title>
+    <title>Title</title>
 </head>
 <body>
 <header th:replace="Base/navbar :: nav"></header>
-<form action="#" th:action="@{/users/add}" th:object="${user}"
+<form action="#" th:action="@{/users/registration}" th:object="${user}"
       method="post">
     <fieldset>
         <input type="submit" trainId="submitButton" th:value="Save">
@@ -16,7 +17,6 @@
                 <th>Email</th>
                 <th>Password</th>
                 <th> Name</th>
-                <th> Type</th>
             </tr>
             </thead>
             <tbody>
@@ -24,15 +24,12 @@
                 <td><input th:field="*{email}" /></td>
                 <td><input type="password" th:field="*{password}" /></td>
                 <td><input th:field="*{name}" /></td>
-<!--                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" role="alert" />-->
+                <!--                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" role="alert" />-->
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
-                <td>
-                    <select  th:field="*{type}">
-                    <option  th:value="Admin">Admin</option>
-                    <option  th:value="Client" >Client</option>
-                    <option  th:value="ResourcesManager">  ResourcesManager</option>
-                </select>
-                </td>
+            </tr>
+            <tr>
+                <div class="g-recaptcha" data-sitekey="6LdXkcsUAAAAABTGOn0-a5F-yFRw13fZx6eBNCT6"></div>
+
             </tr>
             </tbody>
         </table>

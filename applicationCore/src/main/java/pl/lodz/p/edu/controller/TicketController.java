@@ -2,6 +2,8 @@ package pl.lodz.p.edu.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,8 @@ import pl.lodz.p.edu.service.TrainService;
 import pl.lodz.p.edu.service.UserService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("/tickets")
@@ -42,11 +46,16 @@ public class TicketController {
     }
 
     @GetMapping("/add")
-    public String addSite(Model model){
+    public String addSite(Model model, Authentication authentication){
 
-       // model.addAttribute("users",userService.getUsers());
-        model.addAttribute("users",ticketService.getAllActiveUser());
-        //model.addAttribute("trains",trainService.getTrains());
+        if(authentication.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ROLE_Client"))) {
+            List<User> users = new ArrayList<>();
+            users.add(ticketService.getUserByEmail(authentication.getName()));
+            model.addAttribute("users", users);
+        }
+        else{
+            model.addAttribute("users",ticketService.getAllActiveUser());
+        }
         model.addAttribute("trains",ticketService.getAllNoAllocatedTrains());
         model.addAttribute("ticket",new Ticket());
         model.addAttribute("user",new User());
@@ -56,18 +65,41 @@ public class TicketController {
     }
 
     @PostMapping("/add")
-    public String addTrain(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult bindingResult, @Valid @ModelAttribute("train") Train train, BindingResult bindingResult1,@Valid @ModelAttribute("user") User user, BindingResult bindingResult2, Model model){
+    public String addTrain(Authentication authentication,@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult bindingResult, @Valid @ModelAttribute("train") Train train, BindingResult bindingResult1,@Valid @ModelAttribute("user") User user, BindingResult bindingResult2, Model model){
         if(bindingResult.hasErrors()){
-            //model.addAttribute("users",userService.getUsers());
-            model.addAttribute("users",ticketService.getAllActiveUser());
-            //model.addAttribute("trains",trainService.getTrains());
+
+            if(authentication.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ROLE_Client"))) {
+                List<User> users = new ArrayList<>();
+                users.add(ticketService.getUserByEmail(authentication.getName()));
+                model.addAttribute("users", users);
+            }
+            else{
+                model.addAttribute("users",ticketService.getAllActiveUser());
+            }
             model.addAttribute("trains",ticketService.getAllNoAllocatedTrains());
             return "Ticket/create";
-            //return "redirect:/tickets/add";
         }
         ticket.setTrain(train);
         ticket.setUser(user);
-        ticketService.addTicket(ticket);
+        try {
+            ticketService.addTicket(ticket);
+        }
+        catch (Exception e){
+            model.addAttribute("exception",e);
+            if(authentication.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ROLE_Client"))) {
+                List<User> users = new ArrayList<>();
+                users.add(ticketService.getUserByEmail(authentication.getName()));
+                model.addAttribute("users", users);
+            }
+            else{
+                model.addAttribute("users",ticketService.getAllActiveUser());
+            }
+            model.addAttribute("trains",ticketService.getAllNoAllocatedTrains());
+            return "Ticket/create";
+        }
+        if(authentication.getAuthorities().stream().findFirst().get().equals(new SimpleGrantedAuthority("ROLE_Client"))) {
+            return "redirect:/home";
+        }
         return "redirect:/tickets";
 
     }
@@ -108,4 +140,11 @@ public class TicketController {
         model.addAttribute("textUser",new TrainType(""));
         return "Ticket/index";
     }
+
+    @GetMapping("show")
+    public String show(Model model,Authentication authentication){
+        model.addAttribute("user",userService.getUser(authentication.getName()));
+        return "Base/clientTickets";
+    }
+
 }

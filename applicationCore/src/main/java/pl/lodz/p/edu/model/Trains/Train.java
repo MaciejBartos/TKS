@@ -1,14 +1,15 @@
 package pl.lodz.p.edu.model.Trains;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Range;
 import pl.lodz.p.edu.model.Firms.Firm;
-import pl.lodz.p.edu.model.Tickets.Ticket;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.*;
 
 public class Train {
+
 
     private UUID trainId;
     @NotBlank(message = "Name cannot be empty")
@@ -20,23 +21,20 @@ public class Train {
     private int seats;
     private Firm firm;
 
-    public Ticket getTicket() {
-        return ticket;
+    public UUID getTicketID() {
+        return ticketID;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void setTicketID(UUID ticket) {
+        this.ticketID = ticket;
     }
 
-    private Ticket ticket;
+    //private Ticket ticket;
+    private UUID ticketID;
 
-    public Train( UUID id,  String name, int seats, Firm firm) {
-        this.trainId = id;
+    public Train (@JsonProperty("name") String name, @JsonProperty("seats") int seats, @JsonProperty("firm") Firm firm) {
+        this.trainId = UUID.randomUUID();
         this.name = name;
-//        this.seats = new ArrayList<>();
-//        for (int i = 0; i < numberOfSeats; i++) {
-//            seats.add(new Seat(Integer.toString(i+1)));
-//        }
         this.seats = seats;
         this.firm = firm;
     }

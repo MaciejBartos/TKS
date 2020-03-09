@@ -1,11 +1,7 @@
 package pl.lodz.p.edu.repo;
 
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.edu.model.Firms.InterCity;
-import pl.lodz.p.edu.model.Firms.Regio;
-import pl.lodz.p.edu.model.Firms.TLK;
 import pl.lodz.p.edu.model.Trains.ExpressTrain;
-import pl.lodz.p.edu.model.Trains.PassengerTrain;
 import pl.lodz.p.edu.model.Trains.Train;
 
 import java.util.ArrayList;
@@ -19,16 +15,18 @@ public class TrainRepo implements IRepo<Train> {
     private List<Train> trains = new ArrayList<>();
 
     public TrainRepo() {
-        trains.add(new ExpressTrain(UUID.randomUUID(), "pociag1", 10, new Regio(),5));
-        trains.add(new PassengerTrain(UUID.randomUUID(), "pociag2", 20, new InterCity()));
-        trains.add(new ExpressTrain(UUID.randomUUID(), "pociag3", 30, new TLK(),2));
-        trains.add(new PassengerTrain(UUID.randomUUID(), "pociag4", 30, new TLK()));
+//        trains.add(new ExpressTrain(UUID.randomUUID(), "pociag1", 10, new Regio(),5));
+//        trains.add(new PassengerTrain(UUID.randomUUID(), "pociag2", 20, new InterCity()));
+//        trains.add(new ExpressTrain(UUID.randomUUID(), "pociag3", 30, new TLK(),2));
+//        trains.add(new PassengerTrain(UUID.randomUUID(), "pociag4", 30, new TLK()));
 
     }
 
     public void add(Train t) {
-        synchronized (this){
-            trains.add(t);
+        if(!getById(t.getTrainId()).isPresent()) {
+            synchronized (this) {
+                trains.add(t);
+            }
         }
         //trains.add(new Train(UUID.randomUUID(),name));
     }
@@ -54,6 +52,7 @@ public class TrainRepo implements IRepo<Train> {
                 train.get().setSeats(t.getSeats());
                 train.get().setFirm(t.getFirm());
                 train.get().setName(t.getName());
+                train.get().setTicketID(t.getTicketID());
                 if (train.get() instanceof ExpressTrain && t instanceof ExpressTrain) {
                     ((ExpressTrain) train.get()).setCarriage(((ExpressTrain) t).getCarriage());
                 }
