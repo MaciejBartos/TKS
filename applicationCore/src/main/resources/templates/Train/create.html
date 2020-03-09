@@ -14,7 +14,7 @@
                 <th> Name</th>
                 <th> Firm</th>
                 <th> Number of seats</th>
-                <th th:if="${train instanceof T(pl.pas.pas.model.Trains.ExpressTrain)}">Carriage</th>
+                <th th:if="${train instanceof T(pl.lodz.p.edu.model.Trains.ExpressTrain)}">Carriage</th>
             </tr>
             </thead>
             <tbody>
@@ -29,7 +29,7 @@
                     </select>
                 </td>
                 <td><input th:field="*{seats}" pattern="[0-9]*" title="There must be number"/></td>
-                <td th:if="${train instanceof T(pl.pas.pas.model.Trains.ExpressTrain)}">
+                <td th:if="${train instanceof T(pl.lodz.p.edu.model.Trains.ExpressTrain)}">
                     <input th:field="*{carriage}" pattern="[0-9]*" title="There must be number"/>
                 </td>
             </tr>
