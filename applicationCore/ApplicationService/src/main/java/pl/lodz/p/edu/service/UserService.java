@@ -3,6 +3,7 @@ package pl.lodz.p.edu.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.lodz.p.edu.control.ICRUSItem;
 import pl.lodz.p.edu.model.Users.Admin;
 import pl.lodz.p.edu.model.Users.Client;
 import pl.lodz.p.edu.model.Users.ResourcesManager;
@@ -17,11 +18,12 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private IRepo userRepo;
+    //private IRepo userRepo;
+    private ICRUSItem<User> userRepo;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(IRepo userRepo, PasswordEncoder passwordEncoder) {
+    public UserService(ICRUSItem userRepo, PasswordEncoder passwordEncoder) {
         this.passwordEncoder =passwordEncoder;
         this.userRepo = userRepo;
     }

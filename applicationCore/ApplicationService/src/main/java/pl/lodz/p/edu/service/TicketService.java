@@ -2,6 +2,7 @@ package pl.lodz.p.edu.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.lodz.p.edu.control.ICRDSItem;
 import pl.lodz.p.edu.model.Tickets.Ticket;
 import pl.lodz.p.edu.model.Trains.Train;
 import pl.lodz.p.edu.model.Users.User;
@@ -17,12 +18,13 @@ import java.util.UUID;
 @Service
 public class TicketService {
 
-    private IRepo ticketRepo;
+    //private IRepo ticketRepo;
+    private ICRDSItem<Ticket> ticketRepo;
     private UserService userService;
     private TrainService trainService;
 
     @Autowired
-    public TicketService(IRepo ticketRepo, TrainService trainService, UserService userService) {
+    public TicketService(ICRDSItem ticketRepo, TrainService trainService, UserService userService) {
         this.ticketRepo = ticketRepo;
         this.userService = userService;
         this.trainService = trainService;
