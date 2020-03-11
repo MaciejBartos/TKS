@@ -2,24 +2,25 @@ package pl.lodz.p.edu.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.edu.control.IGetAllItems;
-import pl.lodz.p.edu.control.IGetItem;
+import pl.lodz.p.edu.aggregates.FirmRepositoryAdapter;
+import pl.lodz.p.edu.prots.IGetAllItems;
 import pl.lodz.p.edu.model.Firms.Firm;
-import pl.lodz.p.edu.repo.IRepo;
+
 import java.util.List;
 
 @Service
 public class FirmService {
 
     //private IRepo firmRepo;
-    private IGetAllItems<Firm> getFirms;
+    @Autowired
+    private FirmRepositoryAdapter firmRepo;
 
     @Autowired
-    public FirmService(IGetAllItems<Firm> getFirms) {
-        this.getFirms = getFirms;
+    public FirmService(FirmRepositoryAdapter firmRepo) {
+        this.firmRepo = firmRepo;
     }
 
     public List<Firm> getFirms(){
-        return getFirms.getAll();
+        return firmRepo.getAll();
     }
 }

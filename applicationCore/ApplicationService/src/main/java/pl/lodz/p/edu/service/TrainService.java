@@ -2,12 +2,11 @@ package pl.lodz.p.edu.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.edu.control.ICRUDSItem;
+import pl.lodz.p.edu.aggregates.TrainRepositoryAdapter;
 import pl.lodz.p.edu.model.Firms.InterCity;
 import pl.lodz.p.edu.model.Firms.Regio;
 import pl.lodz.p.edu.model.Firms.TLK;
 import pl.lodz.p.edu.model.Trains.Train;
-import pl.lodz.p.edu.repo.IRepo;
 import pl.lodz.p.edu.repo.TrainRepo;
 
 import java.util.List;
@@ -18,10 +17,10 @@ import java.util.UUID;
 public class TrainService {
 
     //private IRepo trainRepo;
-    private ICRUDSItem<Train> trainRepo;
+    private TrainRepositoryAdapter trainRepo;
 
     @Autowired
-    public TrainService(ICRUDSItem trainRepo) {
+    public TrainService(TrainRepositoryAdapter trainRepo) {
         this.trainRepo = trainRepo;
     }
 

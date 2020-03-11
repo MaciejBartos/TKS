@@ -1,7 +1,7 @@
 package pl.lodz.p.edu.repositories;
 
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.edu.data.Users.User;
+import pl.lodz.p.edu.data.UsersEnt.UserEnt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class UserRepoEnt implements IRepoEnt<User> {
+public class UserRepoEnt implements IRepoEnt<UserEnt> {
 
 //    @Autowired
 //    public UserRepo(PasswordEncoder passwordEncoder) {
@@ -24,35 +24,35 @@ public class UserRepoEnt implements IRepoEnt<User> {
 //        users.add(new ResourcesManager("Maciek", UUID.randomUUID(), true,"manager",passwordEncoder.encode("manager")));
 //    }
 
-    private List<User> users = new ArrayList<>();
+    private List<UserEnt> users = new ArrayList<>();
 //    private PasswordEncoder passwordEncoder;
 
-    public void add(User u) {
+    public void add(UserEnt u) {
         synchronized (this) {
             users.add(u);
         }
     }
 
-    public Optional<User> getById(UUID id) {
+    public Optional<UserEnt> getById(UUID id) {
         return users.stream().filter(user -> user.getUserId().equals(id)).findFirst();
     }
 
-    public Optional<User> getByEmail(String email) {
+    public Optional<UserEnt> getByEmail(String email) {
         return users.stream().filter(user -> user.getEmail().equals(email)).findFirst();
     }
 
-    public List<User> getAll() {
+    public List<UserEnt> getAll() {
         return users;
     }
 
-    public void delete(User u) {
+    public void delete(UserEnt u) {
         synchronized (this) {
             users.remove(u);
         }
     }
 
-    public void update(User u) {
-        Optional<User> user = getById(u.getUserId());
+    public void update(UserEnt u) {
+        Optional<UserEnt> user = getById(u.getUserId());
         if (user.isPresent()) {
 //            users.set(users.indexOf(user), u);
             synchronized (this) {
@@ -63,9 +63,9 @@ public class UserRepoEnt implements IRepoEnt<User> {
         }
     }
 
-    public List<User> sort(String text){
-        List<User> sortUsers = new ArrayList<>();
-        for (User u: users
+    public List<UserEnt> sort(String text){
+        List<UserEnt> sortUsers = new ArrayList<>();
+        for (UserEnt u: users
         ) {
             if (u.getName().length() >= text.length()) {
                 if (u.getName().substring(0, text.length()).equals(text)) {

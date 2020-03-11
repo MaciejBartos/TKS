@@ -3,12 +3,11 @@ package pl.lodz.p.edu.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.edu.control.ICRUSItem;
+import pl.lodz.p.edu.aggregates.UserRepositoryAdapter;
 import pl.lodz.p.edu.model.Users.Admin;
 import pl.lodz.p.edu.model.Users.Client;
 import pl.lodz.p.edu.model.Users.ResourcesManager;
 import pl.lodz.p.edu.model.Users.User;
-import pl.lodz.p.edu.repo.IRepo;
 import pl.lodz.p.edu.repo.UserRepo;
 
 import java.util.List;
@@ -19,11 +18,11 @@ import java.util.UUID;
 public class UserService {
 
     //private IRepo userRepo;
-    private ICRUSItem<User> userRepo;
+    private UserRepositoryAdapter userRepo;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(ICRUSItem userRepo, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepositoryAdapter userRepo, PasswordEncoder passwordEncoder) {
         this.passwordEncoder =passwordEncoder;
         this.userRepo = userRepo;
     }
