@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class UserRepositoryAdapter implements IAddItem<User>, IGetAllItems<User>, IGetItem<User>, ISortItems<User>, IUpdateItem<User> {
+public class UserRepositoryAdapter implements IAddItem<User>, IGetAllItems<User>, IGetItem<User>, ISortItems<User>, IUpdateItem<User>, ILoadUserByEmail {
 
    @Autowired
    private IRepoEnt<UserEnt> userRepo;
@@ -48,5 +48,10 @@ public class UserRepositoryAdapter implements IAddItem<User>, IGetAllItems<User>
     @Override
     public void update(User item) {
         userRepo.update(FromDomainConverter.convertUser(item));
+    }
+
+    @Override
+    public Optional<User> getByEmail(String email) {
+        return Optional.of(ToDomainConverter.convertUser(((UserRepoEnt)userRepo).getByEmail(email).get()));
     }
 }

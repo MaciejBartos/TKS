@@ -3,6 +3,7 @@ package pl.lodz.p.edu.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.edu.aggregates.TicketRepositoryAdapter;
+import pl.lodz.p.edu.infrastructure.*;
 import pl.lodz.p.edu.model.Tickets.Ticket;
 import pl.lodz.p.edu.model.Trains.Train;
 import pl.lodz.p.edu.model.Users.User;
@@ -18,16 +19,28 @@ import java.util.UUID;
 public class TicketService {
 
     //private IRepo ticketRepo;
-    private TicketRepositoryAdapter ticketRepo;
-    private UserService userService;
-    private TrainService trainService;
-
+    //private TicketRepositoryAdapter ticketRepo;
     @Autowired
-    public TicketService(TicketRepositoryAdapter ticketRepo, TrainService trainService, UserService userService) {
-        this.ticketRepo = ticketRepo;
-        this.userService = userService;
-        this.trainService = trainService;
-    }
+    private UserService userService;
+    @Autowired
+    private TrainService trainService;
+    @Autowired
+    private IAddItem<Ticket> ticketAdd;
+    @Autowired
+    private IGetAllItems<Ticket> ticketsGet;
+    @Autowired
+    private IGetItem<Ticket> ticketGet;
+    @Autowired
+    private IDeleteItem<Ticket> ticketDel;
+    @Autowired
+    private ISortItems<Ticket> ticketSort;
+
+//    @Autowired
+//    public TicketService(TicketRepositoryAdapter ticketRepo, TrainService trainService, UserService userService) {
+//        this.ticketRepo = ticketRepo;
+//        this.userService = userService;
+//        this.trainService = trainService;
+//    }
 
     public void addTicket(Ticket t) throws Exception{
         if(trainService.getTrain(t.getTrain().getTrainId())==null || trainService.getTrain(t.getTrain().getTrainId()).getTicketID() != null){
@@ -35,23 +48,26 @@ public class TicketService {
         }
         t.setUser(userService.getUser(t.getUser().getUserId()));
         t.setTrain(trainService.getTrain(t.getTrain().getTrainId()));
-        t.getUser().getTickets().add(t);
+        t.getUser().getTickets().add(t.getTicketId());
         //t.getTrain().setTicket(t);
         t.getTrain().setTicketID(t.getTicketId());
-        ticketRepo.add(t);
+        //ticketRepo.add(t);
+        ticketAdd.add(t);
     }
 
     public void deleteTicket(UUID id){
        Ticket t = getTicket(id);
         if(t.getEndingDate() == null){
-            ticketRepo.delete(t);
+            ticketDel.delete(t);
+            //ticketRepo.delete(t);
             t.getTrain().setTicketID(null);
             t.getUser().getTickets().remove(t);
         }
     }
 
     public List<Ticket> getTickets(){
-        return ticketRepo.getAll();
+        return ticketsGet.getAll();
+        //return ticketRepo.getAll();
     }
 
     public List<Train> getAllNoAllocatedTrains(){
@@ -88,7 +104,8 @@ public class TicketService {
     }
 
     public Ticket getTicket(UUID id){
-        Optional<Ticket> ticket = ticketRepo.getById(id);
+        Optional<Ticket> ticket = ticketGet.getById(id);
+//        Optional<Ticket> ticket = ticketRepo.getById(id);
         if(ticket.isPresent()){
             return ticket.get();
         }
@@ -106,11 +123,14 @@ public class TicketService {
     }
 
     public List<Ticket>sortUsers(String text){
-        return ((TicketRepo)ticketRepo).sortUser(text);
+        return ((TicketRepo)ticketSort).sortUser(text);
+//        return ((TicketRepo)ticketRepo).sortUser(text);
     }
 
     public List<Ticket>sortTrains(String text){
-        return ((TicketRepo)ticketRepo).sortTrain(text);
+
+        return ((TicketRepo)ticketSort).sortTrain(text);
+        //return ((TicketRepo)ticketRepo).sortTrain(text);
     }
 
     public User getUserByEmail(String email){
