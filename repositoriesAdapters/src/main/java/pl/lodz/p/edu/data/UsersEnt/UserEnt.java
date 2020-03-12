@@ -49,15 +49,15 @@ public class UserEnt {
     private UUID userId;
     private boolean isActive;
 
-    public List<TicketEnt> getTickets() {
+    public List<UUID> getTickets() {
         return tickets;
     }
 
-    public void setTickets(List<TicketEnt> tickets) {
+    public void setTickets(List<UUID> tickets) {
         this.tickets = tickets;
     }
 
-    private List<TicketEnt> tickets = new ArrayList<>();
+    private List<UUID> tickets = new ArrayList<>();
 
     public UserEnt(String name, String type, UUID idu, boolean isActive, String email, String password) {
         this.name = name;

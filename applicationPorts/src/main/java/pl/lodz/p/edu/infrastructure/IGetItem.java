@@ -1,4 +1,4 @@
-package pl.lodz.p.edu.prots;
+package pl.lodz.p.edu.infrastructure;
 
 import java.util.Optional;
 import java.util.UUID;

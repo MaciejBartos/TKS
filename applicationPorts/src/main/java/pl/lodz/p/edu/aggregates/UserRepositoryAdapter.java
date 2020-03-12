@@ -2,7 +2,7 @@ package pl.lodz.p.edu.aggregates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.lodz.p.edu.data.UsersEnt.UserEnt;
-import pl.lodz.p.edu.prots.*;
+import pl.lodz.p.edu.infrastructure.*;
 import pl.lodz.p.edu.repositories.IRepoEnt;
 import pl.lodz.p.edu.repositories.UserRepoEnt;
 

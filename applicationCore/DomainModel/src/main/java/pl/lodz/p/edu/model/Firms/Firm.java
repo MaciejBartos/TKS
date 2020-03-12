@@ -28,4 +28,8 @@ public class Firm {
     public UUID getFirmId() {
         return firmId;
     }
+
+    public void setFirmId(UUID id){
+        this.firmId = id;
+    }
 }

@@ -37,15 +37,15 @@ public class User {
     private UUID userId;
     private boolean isActive;
 
-    public List<Ticket> getTickets() {
+    public List<UUID> getTickets() {
         return tickets;
     }
 
-    public void setTickets(List<Ticket> tickets) {
+    public void setTickets(List<UUID> tickets) {
         this.tickets = tickets;
     }
 
-    private List<Ticket> tickets = new ArrayList<>();
+    private List<UUID> tickets = new ArrayList<>();
 
     public User(String name, String type, UUID idu, boolean isActive, String email, String password) {
         this.name = name;

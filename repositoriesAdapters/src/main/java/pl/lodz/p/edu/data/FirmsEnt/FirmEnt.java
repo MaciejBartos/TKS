@@ -31,4 +31,8 @@ public class FirmEnt {
     public UUID getFirmId() {
         return firmId;
     }
+
+    public void setFirmId(UUID id){
+        this.firmId = id;
+    }
 }
