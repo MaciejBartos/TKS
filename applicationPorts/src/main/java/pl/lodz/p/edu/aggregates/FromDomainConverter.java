@@ -10,7 +10,7 @@ import pl.lodz.p.edu.model.Trains.Train;
 import pl.lodz.p.edu.model.Users.User;
 
 public class FromDomainConverter {
-    public static FirmEnt converFirm(Firm firmToConvert){
+    public static FirmEnt convertFirm(Firm firmToConvert){
         FirmEnt firm = new FirmEnt(firmToConvert.getName());
         firm.setFirmId(firmToConvert.getFirmId());
         return firm;
@@ -18,7 +18,7 @@ public class FromDomainConverter {
 
     public static TrainEnt convertTrain(Train trainToConvert){
         TrainEnt train = new TrainEnt();
-        train.setFirm(FromDomainConverter.converFirm(trainToConvert.getFirm()));
+        train.setFirm(FromDomainConverter.convertFirm(trainToConvert.getFirm()));
         train.setName(trainToConvert.getName());
         train.setSeats(trainToConvert.getSeats());
         train.setTicketID(trainToConvert.getTicketID());

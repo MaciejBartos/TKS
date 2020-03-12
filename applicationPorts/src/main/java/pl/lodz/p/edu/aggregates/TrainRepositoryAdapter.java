@@ -7,6 +7,7 @@ import pl.lodz.p.edu.model.Trains.Train;
 import pl.lodz.p.edu.repositories.IRepoEnt;
 import pl.lodz.p.edu.repositories.TrainRepoEnt;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,31 +19,39 @@ public class TrainRepositoryAdapter implements IAddItem<Train>, IDeleteItem<Trai
 
     @Override
     public void add(Train item) {
-        trainRepo.add(item);
+        trainRepo.add(FromDomainConverter.convertTrain(item));
     }
 
     @Override
     public void delete(Train item) {
-        trainRepo.delete(item);
+        trainRepo.delete(FromDomainConverter.convertTrain(item));
     }
 
     @Override
     public List<Train> getAll() {
-        return trainRepo.getAll();
+        List<Train> trains = new LinkedList<>();
+        for(TrainEnt train: trainRepo.getAll()){
+            trains.add(ToDomainConverter.convertTrain(train));
+        }
+        return trains;
     }
 
     @Override
     public Optional<Train> getById(UUID id) {
-        return trainRepo.getById(id);
+        return Optional.of(ToDomainConverter.convertTrain(trainRepo.getById(id).get()));
     }
 
     @Override
     public List<Train> sort(String text) {
-        return ((TrainRepoEnt)trainRepo).sort(text);
+        List<Train> trains = new LinkedList<>();
+        for(TrainEnt train: ((TrainRepoEnt)trainRepo).sort(text)){
+            trains.add(ToDomainConverter.convertTrain(train));
+        }
+        return trains;
     }
 
     @Override
     public void update(Train item) {
-        trainRepo.update(item);
+        trainRepo.update(FromDomainConverter.convertTrain(item));
     }
 }

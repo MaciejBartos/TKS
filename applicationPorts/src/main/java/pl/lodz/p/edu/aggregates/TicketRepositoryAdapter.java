@@ -8,6 +8,7 @@ import pl.lodz.p.edu.model.Tickets.Ticket;
 import pl.lodz.p.edu.repositories.IRepoEnt;
 import pl.lodz.p.edu.repositories.TicketRepoEnt;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,33 +20,45 @@ public class TicketRepositoryAdapter implements IAddItem<Ticket>, IDeleteItem<Ti
 
     @Override
     public void add(Ticket item) {
-        ticketRepo.add(item);
+        ticketRepo.add(FromDomainConverter.convertTicket(item));
     }
 
     @Override
     public void delete(Ticket item) {
-        ticketRepo.delete(item);
+        ticketRepo.delete(FromDomainConverter.convertTicket(item));
     }
 
     @Override
     public List<Ticket> getAll() {
-        return ticketRepo.getAll();
+        List<Ticket> tickets = new LinkedList<>();
+        for(TicketEnt ticket: ticketRepo.getAll()){
+               tickets.add(ToDomainConverter.convertTicket(ticket));
+        }
+        return tickets;
     }
 
     @Override
     public Optional<Ticket> getById(UUID id) {
-        return ticketRepo.getById(id);
+        return Optional.of(ToDomainConverter.convertTicket(ticketRepo.getById(id).get()));
     }
 
     @Override
     public List<Ticket> sort(String text) {
         if(text.charAt(0) == 'T'){
             text = text.substring(1);
-            return ((TicketRepoEnt)ticketRepo).sortTrain(text);
+            List<Ticket> tickets = new LinkedList<>();
+            for(TicketEnt ticket: ((TicketRepoEnt)ticketRepo).sortTrain(text)){
+                tickets.add(ToDomainConverter.convertTicket(ticket));
+            }
+            return tickets;
         }
         else {
             text = text.substring(1);
-            return ((TicketRepoEnt)ticketRepo).sortUser(text);
+            List<Ticket> tickets = new LinkedList<>();
+            for(TicketEnt ticket: ((TicketRepoEnt)ticketRepo).sortUser(text)){
+                tickets.add(ToDomainConverter.convertTicket(ticket));
+            }
+            return tickets;
         }
     }
 }

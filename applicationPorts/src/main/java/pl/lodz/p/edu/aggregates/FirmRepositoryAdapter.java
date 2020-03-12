@@ -6,15 +6,20 @@ import pl.lodz.p.edu.infrastructure.IGetAllItems;
 import pl.lodz.p.edu.model.Firms.Firm;
 import pl.lodz.p.edu.repositories.IRepoEnt;
 
+import java.util.LinkedList;
 import java.util.List;
 
-public class FirmRepositoryAdapter implements IGetAllItems<FirmEnt> {
+public class FirmRepositoryAdapter implements IGetAllItems<Firm> {
 
     @Autowired
     private IRepoEnt<FirmEnt> firmRepo;
 
     @Override
     public List<Firm> getAll() {
-        return firmRepo.getAll();
+        List<Firm> firms = new LinkedList<>();
+        for(FirmEnt firm: firmRepo.getAll()){
+            firms.add(ToDomainConverter.convertFirm(firm));
+        }
+        return firms;
     }
 }
