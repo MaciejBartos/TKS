@@ -84,12 +84,12 @@ public class TrainController {
 
 //    @GetMapping
 //    public List<Train> getAllTrains(Model pl.lodz.p.edu.model){
-//        return trainService.getTrains();
+//        return trainService.getAll();
 //    }
     @GetMapping
     public String s(Model model){
 
-       // pl.lodz.p.edu.model.addAttribute("trains",trainService.getTrains());
+       // pl.lodz.p.edu.model.addAttribute("trains",trainService.getAll());
         model.addAttribute("trains", getTrains());
         model.addAttribute("text",new TrainType(""));
         return "Train/index";
@@ -98,19 +98,19 @@ public class TrainController {
 //    @GetMapping("/add")
 //    public String addSite(Model pl.lodz.p.edu.model){
 //
-//        pl.lodz.p.edu.model.addAttribute("firms",firmService.getFirms());
+//        pl.lodz.p.edu.model.addAttribute("firms",firmService.getAll());
 //        pl.lodz.p.edu.model.addAttribute("train",new ExpressTrain());
 //        return "Train/create";
 //
 //    }
 //
 //    @PostMapping("/add")
-//    public String addTrain(@Valid @ModelAttribute("train") Train train, BindingResult bindingResult, Model pl.lodz.p.edu.model){
+//    public String add(@Valid @ModelAttribute("train") Train train, BindingResult bindingResult, Model pl.lodz.p.edu.model){
 //        if(bindingResult.hasErrors()){
-//            pl.lodz.p.edu.model.addAttribute("firms",firmService.getFirms());
+//            pl.lodz.p.edu.model.addAttribute("firms",firmService.getAll());
 //            return "Train/create";
 //        }
-//        trainService.addTrain(train);
+//        trainService.add(train);
 //        return "redirect:/trains";
 //
 //    }
@@ -119,7 +119,7 @@ public class TrainController {
     public String addSiteE( Model model){
             model.addAttribute("train",new ExpressTrain());
             model.addAttribute("trainType",new TrainType("express"));
-        model.addAttribute("firms",firmService.getFirms());
+        model.addAttribute("firms",firmService.getAll());
 
         return "Train/create";
 
@@ -130,7 +130,7 @@ public class TrainController {
     public String addSiteP( Model model){
         model.addAttribute("train",new PassengerTrain());
         model.addAttribute("trainType",new TrainType("passenger"));
-        model.addAttribute("firms",firmService.getFirms());
+        model.addAttribute("firms",firmService.getAll());
 
         return "Train/create";
 
@@ -139,12 +139,12 @@ public class TrainController {
     @PostMapping("/add/express")
     public String addTrain(@Valid @ModelAttribute("train") ExpressTrain train, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            model.addAttribute("firms",firmService.getFirms());
+            model.addAttribute("firms",firmService.getAll());
             model.addAttribute("trainType",new TrainType("express"));
             return "Train/create";
         }
         postExpressTrain(train);
-        //trainService.addTrain(train);
+        //trainService.add(train);
         return "redirect:/trains";
 
     }
@@ -152,11 +152,11 @@ public class TrainController {
     @PostMapping("/add/passenger")
     public String addTrain(@Valid @ModelAttribute("train") PassengerTrain train, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            model.addAttribute("firms",firmService.getFirms());
+            model.addAttribute("firms",firmService.getAll());
             model.addAttribute("trainType",new TrainType("passenger"));
             return "Train/create";
         }
-        //trainService.addTrain(train);
+        //trainService.add(train);
         postPassengerTrain(train);
         return "redirect:/trains";
 
@@ -165,7 +165,7 @@ public class TrainController {
 
     @GetMapping("/edit/{id}")
     public String editSite(@PathVariable UUID id, Model model){
-        //Train t = trainService.getTrain(id);
+        //Train t = trainService.get(id);
         Train t = getTrain(id);
         if(t instanceof ExpressTrain){
             model.addAttribute("trainType",new TrainType("express"));
@@ -174,8 +174,8 @@ public class TrainController {
             model.addAttribute("trainType",new TrainType("passenger"));
         }
         model.addAttribute("train",getTrain(id));
-        //pl.lodz.p.edu.model.addAttribute("train",trainService.getTrain(id));
-        model.addAttribute("firms",firmService.getFirms());
+        //pl.lodz.p.edu.model.addAttribute("train",trainService.get(id));
+        model.addAttribute("firms",firmService.getAll());
         return "Train/edit";
     }
     @PostMapping("/edit/{id}/express")
@@ -184,12 +184,12 @@ public class TrainController {
             train.setTrainId(id);
             model.addAttribute("train",train);
             model.addAttribute("trainType",new TrainType("express"));
-            model.addAttribute("firms",firmService.getFirms());
+            model.addAttribute("firms",firmService.getAll());
             return "Train/edit";
         }
         train.setTrainId(id);
         putExpressTrain(train);
-        //trainService.updateTrain(train);
+        //trainService.update(train);
         return "redirect:/trains";
     }
 
@@ -199,20 +199,20 @@ public class TrainController {
             train.setTrainId(id);
             model.addAttribute("train",train);
             model.addAttribute("trainType",new TrainType("passenger"));
-            model.addAttribute("firms",firmService.getFirms());
+            model.addAttribute("firms",firmService.getAll());
             return "Train/edit";
         }
         train.setTrainId(id);
         putPassengerTrain(train);
-        //trainService.updateTrain(train);
+        //trainService.update(train);
         return "redirect:/trains";
     }
 
     @GetMapping("/train/{id}")
     public String info(@PathVariable UUID id, Model model){
         model.addAttribute("train",getTrain(id));
-       // pl.lodz.p.edu.model.addAttribute("train",trainService.getTrain(id));
-        model.addAttribute("ticket", ticketService.getTicket(getTrain(id).getTicketID()));
+       // pl.lodz.p.edu.model.addAttribute("train",trainService.get(id));
+        model.addAttribute("ticket", ticketService.get(getTrain(id).getTicketID()));
         return "Train/info";
     }
 
@@ -221,8 +221,8 @@ public class TrainController {
     @GetMapping("/delete/{id}")
     public String delTrain(@PathVariable UUID id){
         if(getTrain(id).getTicketID() != null){
-            ticketService.getTicket(getTrain(id).getTicketID()).setTrain(null);
-            //ticketService.getTicket(trainService.getTrain(id).getTicketID()).setTrain(null);
+            ticketService.get(getTrain(id).getTicketID()).setTrain(null);
+            //ticketService.get(trainService.get(id).getTicketID()).setTrain(null);
         }
         deleteTrain(id);
         // trainService.delete(id);

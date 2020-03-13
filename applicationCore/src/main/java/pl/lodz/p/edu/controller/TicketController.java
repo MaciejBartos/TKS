@@ -38,7 +38,7 @@ public class TicketController {
 
     @GetMapping
     public String showAll(Model model){
-        model.addAttribute("tickets",ticketService.getTickets());
+        model.addAttribute("tickets",ticketService.getAll());
         model.addAttribute("textUser",new TrainType(""));
         model.addAttribute("textTrain",new TrainType(""));
         return "Ticket/index";
@@ -82,7 +82,7 @@ public class TicketController {
         ticket.setTrain(train);
         ticket.setUser(user);
         try {
-            ticketService.addTicket(ticket);
+            ticketService.add(ticket);
         }
         catch (Exception e){
             model.addAttribute("exception",e);
@@ -111,14 +111,14 @@ public class TicketController {
 
     @GetMapping("delete/{id}")
     public String delete(@PathVariable UUID id){
-        ticketService.deleteTicket(id);
+        ticketService.delete(id);
         return "redirect:/tickets";
     }
 
     @GetMapping("sortUser")
     public String sortUser(@ModelAttribute("textUser") TrainType text, Model model){
         if(text.getType() == ""){
-            model.addAttribute("tickets",ticketService.getTickets());
+            model.addAttribute("tickets",ticketService.getAll());
         }
         else{
             model.addAttribute("tickets",ticketService.sortUsers(text.getType()));
@@ -131,7 +131,7 @@ public class TicketController {
     @GetMapping("sortTrain")
     public String sortTrain(@ModelAttribute("textTrain") TrainType text, Model model){
         if(text.getType() == ""){
-            model.addAttribute("tickets",ticketService.getTickets());
+            model.addAttribute("tickets",ticketService.getAll());
         }
         else{
             model.addAttribute("tickets",ticketService.sortTrains(text.getType()));
@@ -143,7 +143,7 @@ public class TicketController {
 
     @GetMapping("show")
     public String show(Model model,Authentication authentication){
-        model.addAttribute("user",userService.getUser(authentication.getName()));
+        model.addAttribute("user",userService.get(authentication.getName()));
         return "Base/clientTickets";
     }
 

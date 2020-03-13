@@ -12,6 +12,7 @@ import pl.lodz.p.edu.model.Users.User;
 import pl.lodz.p.edu.security.ReCaptchaResponse;
 import pl.lodz.p.edu.service.UserService;
 
+
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.UUID;
@@ -33,7 +34,7 @@ public class UserController {
 
     @GetMapping
     public String showAll(Model model){
-        model.addAttribute("users",userService.getUsers());
+        model.addAttribute("users",userService.getAll());
         model.addAttribute("text",new TrainType(""));
         return "User/index";
     }
@@ -73,7 +74,7 @@ public class UserController {
             }
             user.setType("Client");
             user.setIsActive(false);
-            userService.addUser(user);
+            userService.add(user);
             return "redirect:/home";
         }
         return "Base/registration";
@@ -101,7 +102,7 @@ public class UserController {
                 if(bindingResult.hasErrors()){
                     return "User/create";
                 }
-                userService.addUser(user);
+                userService.add(user);
                 return "redirect:/users";
 //            }
 //        }
@@ -120,7 +121,7 @@ public class UserController {
 
     @GetMapping("/edit/{id}")
     public String editSite(@PathVariable UUID id, Model model){
-        model.addAttribute("user",userService.getUser(id));
+        model.addAttribute("user",userService.get(id));
         return "User/edit";
     }
     @PostMapping("/edit/{id}")
@@ -131,20 +132,20 @@ public class UserController {
             return "User/edit";
         }
         user.setUserId(id);
-        userService.updateUser(user);
+        userService.update(user);
         return "redirect:/users";
     }
 
     @GetMapping("/user/{id}")
     public String info(@PathVariable UUID id, Model model){
-        model.addAttribute("user",userService.getUser(id));
+        model.addAttribute("user",userService.get(id));
         return "User/info";
     }
 
     @GetMapping("sort")
     public String sort(@ModelAttribute("text") TrainType text, Model model){
         if(text.getType() == ""){
-            model.addAttribute("users", userService.getUsers());
+            model.addAttribute("users", userService.getAll());
         }
         else{
             model.addAttribute("users",userService.sort(text.getType()));

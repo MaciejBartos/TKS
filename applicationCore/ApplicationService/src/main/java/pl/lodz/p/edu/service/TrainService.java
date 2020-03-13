@@ -2,52 +2,52 @@ package pl.lodz.p.edu.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.edu.aggregates.TrainRepositoryAdapter;
 import pl.lodz.p.edu.infrastructure.*;
 import pl.lodz.p.edu.model.Firms.InterCity;
 import pl.lodz.p.edu.model.Firms.Regio;
 import pl.lodz.p.edu.model.Firms.TLK;
 import pl.lodz.p.edu.model.Trains.Train;
 import pl.lodz.p.edu.repo.TrainRepo;
+import pl.lodz.p.edu.userInterface.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class TrainService {
+public class TrainService implements SaveItemUseCase<Train>, UpgradeItemUseCase<Train>, ShowItemUseCase<Train>, ShowAllItemsUseCase<Train>, SortItemsUseCase<Train>, RemoveItemUseCase {
 
     //private IRepo trainRepo;
     //private TrainRepositoryAdapter trainRepo;
     @Autowired
-    private IAddItem<Train> trainAdd;
+    private IAddItem<pl.lodz.p.edu.model.Trains.Train> trainAdd;
     @Autowired
-    private IGetAllItems<Train> trainsGet;
+    private IGetAllItems<pl.lodz.p.edu.model.Trains.Train> trainsGet;
     @Autowired
-    private IGetItem<Train> trainGet;
+    private IGetItem<pl.lodz.p.edu.model.Trains.Train> trainGet;
     @Autowired
-    private IDeleteItem<Train> trainDel;
+    private IDeleteItem<pl.lodz.p.edu.model.Trains.Train> trainDel;
     @Autowired
-    private IUpdateItem<Train> trainUp;
+    private IUpdateItem<pl.lodz.p.edu.model.Trains.Train> trainUp;
     @Autowired
-    private ISortItems<Train> trainSort;
+    private ISortItems<pl.lodz.p.edu.model.Trains.Train> trainSort;
 
 //    @Autowired
 //    public TrainService(TrainRepositoryAdapter trainRepo) {
 //        this.trainRepo = trainRepo;
 //    }
 
-    public void addTrain(Train t){
+    public void add(pl.lodz.p.edu.model.Trains.Train t){
 
         trainAdd.add(t);
     }
 
-    public List<Train> getTrains(){
+    public List<pl.lodz.p.edu.model.Trains.Train> getAll(){
         return trainsGet.getAll();
     }
 
-    public Train getTrain(UUID id){
-        Optional<Train> t = trainGet.getById(id);
+    public pl.lodz.p.edu.model.Trains.Train get(UUID id){
+        Optional<pl.lodz.p.edu.model.Trains.Train> t = trainGet.getById(id);
         if (t.isPresent()){
             return t.get();
         }
@@ -55,7 +55,7 @@ public class TrainService {
         //return new Train();
     }
 
-    public void updateTrain( Train tupdate){
+    public void update(pl.lodz.p.edu.model.Trains.Train tupdate){
         switch (tupdate.getFirm().getName()){
             case "TLK":
                 tupdate.setFirm(new TLK());
@@ -72,10 +72,10 @@ public class TrainService {
     }
     public void delete(UUID id){
         //ustawienie nulla dla alokacji
-        Optional<Train> t = trainGet.getById(id);
+        Optional<pl.lodz.p.edu.model.Trains.Train> t = trainGet.getById(id);
         if(t.isPresent()){
 //            if(t.get().getTicketID() !=null) {
-//                t.get().getTicket().setTrain(null);
+//                t.get().get().setTrain(null);
 //
 //            }
             trainDel.delete(t.get());
@@ -83,8 +83,8 @@ public class TrainService {
 
     }
 
-    public List<Train> sort(String text){
-        return ((TrainRepo)trainSort).sort(text);
+    public List<pl.lodz.p.edu.model.Trains.Train> sort(String text){
+        return trainSort.sort(text);
     }
 
 

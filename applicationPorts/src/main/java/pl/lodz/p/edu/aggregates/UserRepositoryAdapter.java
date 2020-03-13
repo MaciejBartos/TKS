@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.aggregates;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import pl.lodz.p.edu.data.UsersEnt.UserEnt;
 import pl.lodz.p.edu.infrastructure.*;
 import pl.lodz.p.edu.model.Users.User;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class UserRepositoryAdapter implements IAddItem<User>, IGetAllItems<User>, IGetItem<User>, ISortItems<User>, IUpdateItem<User>, ILoadUserByEmail {
 
    @Autowired

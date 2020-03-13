@@ -27,12 +27,12 @@ public class TrainRest {
 
     @GetMapping
     public List<Train> getAll(){
-        return trainService.getTrains();
+        return trainService.getAll();
     }
 
     @GetMapping(path = "{id}")
     public Train get(@PathVariable UUID id){
-        return trainService.getTrain(id);
+        return trainService.get(id);
     }
 
     @PostMapping("/express")
@@ -40,7 +40,7 @@ public class TrainRest {
         if (bindingResult.hasErrors()){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        trainService.addTrain(train);
+        trainService.add(train);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -49,7 +49,7 @@ public class TrainRest {
         if (bindingResult.hasErrors()){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        trainService.addTrain(train);
+        trainService.add(train);
         return new ResponseEntity(HttpStatus.CREATED);
     }
     @PutMapping("/express/{id}")
@@ -58,7 +58,7 @@ public class TrainRest {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         train.setTrainId(id);
-        trainService.updateTrain(train);
+        trainService.update(train);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -68,7 +68,7 @@ public class TrainRest {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         train.setTrainId(id);
-        trainService.updateTrain(train);
+        trainService.update(train);
         return new ResponseEntity(HttpStatus.OK);
     }
     @DeleteMapping(path = "{id}")

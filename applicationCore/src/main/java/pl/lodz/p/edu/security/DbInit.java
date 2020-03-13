@@ -48,8 +48,8 @@ public class DbInit implements CommandLineRunner {
 
         for (int i = 0; i < 3; i++) {
 //            ticketRepo.add(new Ticket(UUID.randomUUID(),userRepo.getAll().get(i),trainRepo.getAll().get(i), LocalDate.of(1111,1,1),null));
-//            ticketRepo.getAll().get(i).getTrain().setTicket(ticketRepo.getAll().get(i));
-//            ticketRepo.getAll().get(i).getUser().getTickets().add(ticketRepo.getAll().get(i));
+//            ticketRepo.getAll().get(i).get().setTicket(ticketRepo.getAll().get(i));
+//            ticketRepo.getAll().get(i).getUser().getAll().add(ticketRepo.getAll().get(i));
         }
     }
 }

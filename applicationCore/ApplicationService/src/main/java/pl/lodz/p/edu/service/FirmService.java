@@ -5,17 +5,18 @@ import org.springframework.stereotype.Service;
 import pl.lodz.p.edu.aggregates.FirmRepositoryAdapter;
 import pl.lodz.p.edu.infrastructure.IGetAllItems;
 import pl.lodz.p.edu.model.Firms.Firm;
+import pl.lodz.p.edu.userInterface.ShowAllItemsUseCase;
 
 import java.util.List;
 
 @Service
-public class FirmService {
+public class FirmService implements ShowAllItemsUseCase<Firm> {
 
     //private IRepo firmRepo;
     @Autowired
     private IGetAllItems<Firm> firms;
 
-    public List<Firm> getFirms(){
+    public List<Firm> getAll(){
         return firms.getAll();
     }
 }

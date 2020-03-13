@@ -10,6 +10,7 @@ import pl.lodz.p.edu.model.Users.Client;
 import pl.lodz.p.edu.model.Users.ResourcesManager;
 import pl.lodz.p.edu.model.Users.User;
 import pl.lodz.p.edu.repo.UserRepo;
+import pl.lodz.p.edu.userInterface.*;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserService implements SaveItemUseCase<User>, UpgradeItemUseCase<User>, ShowItemUseCase<User>, ShowAllItemsUseCase<User>, SortItemsUseCase<User>, ChangeStateUseCase {
 
     //private IRepo userRepo;
     //private UserRepositoryAdapter userRepo;
@@ -42,7 +43,7 @@ public class UserService {
 //        this.userRepo = userRepo;
 //    }
 
-    public void addUser(User u){
+    public void add(User u){
         switch(u.getType()){
             case "Admin":
                 userAdd.add(new Admin(u.getName(),u.getUserId(),u.getIsActive(),u.getEmail(),passwordEncoder.encode(u.getPassword())));
@@ -59,13 +60,13 @@ public class UserService {
         }
     }
 
-    public List<User> getUsers(){
+    public List<User> getAll(){
 
         //return userRepo.getAll();
         return usersGet.getAll();
     }
 
-    public User getUser(UUID id){
+    public User get(UUID id){
        Optional<User> u = userGet.getById(id);
 //       Optional<User> u = userRepo.getById(id);
        if(u.isPresent()){
@@ -77,7 +78,7 @@ public class UserService {
 
     }
 
-    public User getUser(String email){
+    public User get(String email){
         //Optional<User> u = ((UserRepo)userRepo).getByEmail(email);
         Optional<User> u = ((UserRepo)userGetByEmail).getByEmail(email);
         if(u.isPresent()){
@@ -97,7 +98,7 @@ public class UserService {
     }
 
 
-    public void updateUser(User user) {
+    public void update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         //userRepo.update(user);
         userUp.update(user);
@@ -109,7 +110,7 @@ public class UserService {
 //            userRepo.update(u.get().getUserId(),u.get());
 //        }
     }
-    // public void updateUser(UUID id, User uupdate){
+    // public void update(UUID id, User uupdate){
 //        Optional<User> u = userRepo.getById(id);
 //        if (u.isPresent()){
 //            if(user.getName() !="") {
@@ -128,7 +129,7 @@ public class UserService {
 //    }
 
     public List<User> sort(String text){
-        return ((UserRepo)userSort).sort(text);
+        return userSort.sort(text);
         //return ((UserRepo)userRepo).sort(text);
     }
 }

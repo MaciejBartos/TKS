@@ -1,6 +1,7 @@
 package pl.lodz.p.edu.aggregates;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import pl.lodz.p.edu.data.TrainsEnt.TrainEnt;
 import pl.lodz.p.edu.infrastructure.*;
 import pl.lodz.p.edu.model.Trains.Train;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class TrainRepositoryAdapter implements IAddItem<Train>, IDeleteItem<Train>, IGetAllItems<Train>, IGetItem<Train>, ISortItems<Train>, IUpdateItem<Train> {
 
     @Autowired

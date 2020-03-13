@@ -2,6 +2,7 @@ package pl.lodz.p.edu.aggregates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.stereotype.Repository;
 import pl.lodz.p.edu.data.TicketsEnt.TicketEnt;
 import pl.lodz.p.edu.infrastructure.*;
 import pl.lodz.p.edu.model.Tickets.Ticket;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class TicketRepositoryAdapter implements IAddItem<Ticket>, IDeleteItem<Ticket>, IGetAllItems<Ticket>, IGetItem<Ticket>, ISortItems<Ticket> {
 
     @Autowired
