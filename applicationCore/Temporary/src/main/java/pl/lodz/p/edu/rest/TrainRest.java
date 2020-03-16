@@ -26,18 +26,18 @@ public class TrainRest {
     }
 
     @GetMapping
-    public List<Train> getAll(){
+    public List<Train> getAll() {
         return trainService.getAll();
     }
 
     @GetMapping(path = "{id}")
-    public Train get(@PathVariable UUID id){
+    public Train get(@PathVariable UUID id) {
         return trainService.get(id);
     }
 
     @PostMapping("/express")
-    public ResponseEntity postE(@Valid @RequestBody ExpressTrain train, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public ResponseEntity postE(@Valid @RequestBody ExpressTrain train, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         trainService.add(train);
@@ -45,16 +45,17 @@ public class TrainRest {
     }
 
     @PostMapping("/passenger")
-    public ResponseEntity postP(@Valid @RequestBody PassengerTrain train, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public ResponseEntity postP(@Valid @RequestBody PassengerTrain train, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         trainService.add(train);
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
     @PutMapping("/express/{id}")
-    public ResponseEntity putE(@PathVariable UUID id,@Valid @RequestBody ExpressTrain train,BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public ResponseEntity putE(@PathVariable UUID id, @Valid @RequestBody ExpressTrain train, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         train.setTrainId(id);
@@ -63,22 +64,23 @@ public class TrainRest {
     }
 
     @PutMapping("/passenger/{id}")
-    public ResponseEntity putP(@PathVariable UUID id,@Valid @RequestBody PassengerTrain train,BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public ResponseEntity putP(@PathVariable UUID id, @Valid @RequestBody PassengerTrain train, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         train.setTrainId(id);
         trainService.update(train);
         return new ResponseEntity(HttpStatus.OK);
     }
+
     @DeleteMapping(path = "{id}")
-    public ResponseEntity del(@PathVariable UUID id){
+    public ResponseEntity del(@PathVariable UUID id) {
         trainService.delete(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/sort/{text}")
-    public List<Train> sort(@PathVariable String text){
+    public List<Train> sort(@PathVariable String text) {
         return trainService.sort(text);
     }
 }

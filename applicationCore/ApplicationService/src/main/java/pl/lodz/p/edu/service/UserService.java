@@ -12,7 +12,7 @@ import pl.lodz.p.edu.model.Users.User;
 import pl.lodz.p.edu.repo.UserRepo;
 import pl.lodz.p.edu.userInterface.*;
 
-import javax.jws.soap.SOAPBinding;
+//import javax.jws.soap.SOAPBinding;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

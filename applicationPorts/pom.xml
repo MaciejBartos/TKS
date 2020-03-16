@@ -31,7 +31,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>pl.lodz.p.edu</groupId>
+            <groupId>pl.lodz.p.edu.applicationCore</groupId>
             <artifactId>DomainModel</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
