@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>tks</artifactId>
+        <groupId>pl.lodz.p.edu</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>Soap</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.edu</groupId>
+            <artifactId>UserDomain</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.edu</groupId>
+            <artifactId>UserPorts</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.edu</groupId>
+            <artifactId>UserPorts</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-core</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>jaxb2-maven-plugin</artifactId>-->
+<!--                <version>2.5.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>xjc</id>-->
+<!--                        <goals>-->
+<!--                            <goal>xjc</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <sources>-->
+<!--&lt;!&ndash;                    <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <source>${project.basedir}\src\main\resources\UserSoapModel.xsd</source>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <source>${project.basedir}\src\main\resources\Methods.xsd</source>&ndash;&gt;-->
+<!--                    </sources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+        </plugins>
+    </build>
+
+</project>
